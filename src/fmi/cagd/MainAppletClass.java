@@ -47,15 +47,7 @@ public class MainAppletClass extends Applet implements MouseListener,
 		this.setSize(getSize());
 		width = getSize().width;
 		height = getSize().height;
-
-		String file = "";
-		try {
-			file = FileUtils.readFileToString(new File("cube.obj"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		System.out.println(file);
+		
 
 		vertices = new ArrayList<>();
 		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, -1.5, -1), null));
