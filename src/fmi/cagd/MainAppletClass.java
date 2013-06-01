@@ -2,14 +2,19 @@ package fmi.cagd;
 
 import java.applet.Applet;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.commons.io.FileUtils;
 
 import fmi.cagd.entities.Edge;
 import fmi.cagd.entities.Point3D;
@@ -17,14 +22,17 @@ import fmi.cagd.entities.Tuple;
 
 /**
  * Rather trivial class name.
+ * 
  * @author kiril
- *
+ * 
  */
 public class MainAppletClass extends Applet implements MouseListener,
 		MouseMotionListener {
 
-	int width, height;
-	int mx, my; // the most recently recorded mouse coordinates
+	int width;
+	int height;
+	int mx;
+	int my; // the most recently recorded mouse coordinates
 
 	private Image backbuffer;
 	private Graphics backg;
@@ -36,11 +44,21 @@ public class MainAppletClass extends Applet implements MouseListener,
 	List<Edge> edges;
 
 	public void init() {
+		this.setSize(getSize());
 		width = getSize().width;
 		height = getSize().height;
 
+		String file = "";
+		try {
+			file = FileUtils.readFileToString(new File("cube.obj"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(file);
+
 		vertices = new ArrayList<>();
-		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, -1, -1), null));
+		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, -1.5, -1), null));
 		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, -1, 1), null));
 		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, 1, -1), null));
 		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, 1, 1), null));
@@ -61,7 +79,7 @@ public class MainAppletClass extends Applet implements MouseListener,
 		edges.add(new Edge(4, 5));
 		edges.add(new Edge(4, 6));
 		edges.add(new Edge(5, 7));
-		edges.add(new Edge(6, 7));
+		// edges.add(new Edge(6, 7));
 
 		backbuffer = createImage(width, height);
 		backg = backbuffer.getGraphics();
@@ -172,5 +190,10 @@ public class MainAppletClass extends Applet implements MouseListener,
 	@Override
 	public void paint(Graphics g) {
 		update(g);
+	}
+
+	@Override
+	public Dimension getSize() {
+		return new Dimension(640, 480);
 	}
 }
