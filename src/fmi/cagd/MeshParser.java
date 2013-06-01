@@ -25,10 +25,11 @@ public class MeshParser {
 
 		String name = getName(lines);
 		List<Point3D> v = getVertices(lines);
+		List<Point3D> n = getNormals(lines);
 
 		// System.out.println(m);
 
-		return new Mesh(name, v);
+		return new Mesh(name, v, n);
 	}
 
 	private static String getName(List<String> lines) {
@@ -43,6 +44,22 @@ public class MeshParser {
 		List<Point3D> result = new ArrayList<>();
 		for (String line : lines) {
 			if (line.trim().startsWith("v ")) {
+				String s = reduceWitespaces(line.substring(2));
+				List<String> nums = Arrays.asList(s.split(" "));
+				Double x = Double.valueOf(nums.get(0));
+				Double y = Double.valueOf(nums.get(1));
+				Double z = Double.valueOf(nums.get(2));
+				//TODO: 4th coordinate?
+				result.add(new Point3D(x, y, z));
+			}
+		}
+		return result;
+	}
+	
+	private static List<Point3D> getNormals(List<String> lines) {
+		List<Point3D> result = new ArrayList<>();
+		for (String line : lines) {
+			if (line.trim().startsWith("vn ")) {
 				String s = reduceWitespaces(line.substring(2));
 				List<String> nums = Arrays.asList(s.split(" "));
 				Double x = Double.valueOf(nums.get(0));
