@@ -40,4 +40,9 @@ public class Point3D {
 			return false;
 		return true;
 	}
+	
+	@Override
+	public String toString() {
+		return "Point3D [x=" + x + ", y=" + y + ", z=" + z + "]";
+	}
 }

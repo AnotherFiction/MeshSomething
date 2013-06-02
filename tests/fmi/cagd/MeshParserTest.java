@@ -50,7 +50,13 @@ public class MeshParserTest {
 
 	@Test
 	public void firstAndLastFaces() {
-		Assert.assertEquals(new Face(0,6,4), mesh.getFaces().get(0));
-		Assert.assertEquals(new Face(1,7,3), mesh.getFaces().get(mesh.getFaces().size() - 1));
+		Assert.assertEquals(new Face(0, 6, 4), mesh.getFaces().get(0));
+		Assert.assertEquals(new Face(1, 7, 3),
+				mesh.getFaces().get(mesh.getFaces().size() - 1));
+	}
+
+	@Test
+	public void getMeshCenter() {
+		Assert.assertEquals(new Point3D(0.5, 0.5, 0.5), mesh.geometricCenter());
 	}
 }

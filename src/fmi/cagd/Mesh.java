@@ -12,7 +12,8 @@ public class Mesh {
 	private final List<Point3D> normals;
 	private final List<Face> faces;
 
-	public Mesh(String name, List<Point3D> vertices, List<Point3D> normals, List<Face> faces) {
+	public Mesh(String name, List<Point3D> vertices, List<Point3D> normals,
+			List<Face> faces) {
 		this.name = name;
 		this.vertices = vertices;
 		this.normals = normals;
@@ -33,5 +34,28 @@ public class Mesh {
 
 	public List<Face> getFaces() {
 		return this.faces;
+	}
+
+	public Point3D geometricCenter() {
+		Point3D p = new Point3D(0, 0, 0);
+		for (Point3D point : vertices) {
+			p.x += point.x;
+			p.y += point.y;
+			p.z += point.z;
+		}
+		p.x /= vertices.size();
+		p.y /= vertices.size();
+		p.z /= vertices.size();
+		return p;
+	}
+
+	public Mesh recenter() {
+		Point3D center = geometricCenter();
+		for (Point3D p : vertices) {
+			p.x -= center.x;
+			p.y -= center.y;
+			p.z -= center.z;
+		}
+		return this;
 	}
 }
