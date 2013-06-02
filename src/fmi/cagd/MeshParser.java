@@ -9,7 +9,8 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
-import fmi.cagd.entities.Point3D;
+import fmi.cagd.domain.Face;
+import fmi.cagd.domain.Point3D;
 
 public class MeshParser {
 
@@ -26,10 +27,9 @@ public class MeshParser {
 		String name = getName(lines);
 		List<Point3D> v = getVertices(lines);
 		List<Point3D> n = getNormals(lines);
+		List<Face> f = getFaces(lines);
 
-		// System.out.println(m);
-
-		return new Mesh(name, v, n);
+		return new Mesh(name, v, n, f);
 	}
 
 	private static String getName(List<String> lines) {
@@ -49,13 +49,13 @@ public class MeshParser {
 				Double x = Double.valueOf(nums.get(0));
 				Double y = Double.valueOf(nums.get(1));
 				Double z = Double.valueOf(nums.get(2));
-				//TODO: 4th coordinate?
+				// TODO: 4th coordinate?
 				result.add(new Point3D(x, y, z));
 			}
 		}
 		return result;
 	}
-	
+
 	private static List<Point3D> getNormals(List<String> lines) {
 		List<Point3D> result = new ArrayList<>();
 		for (String line : lines) {
@@ -65,31 +65,30 @@ public class MeshParser {
 				Double x = Double.valueOf(nums.get(0));
 				Double y = Double.valueOf(nums.get(1));
 				Double z = Double.valueOf(nums.get(2));
-				//TODO: 4th coordinate?
-				result.add(new Point3D(x, y, z));
-			}
-		}
-		return result;
-	}
-	
-	private static List<Point3D> getFaces(List<String> lines) {
-		List<Point3D> result = new ArrayList<>();
-		for (String line : lines) {
-			if (line.trim().startsWith("f ")) {
-				String s = reduceWitespaces(line.substring(2));
-				List<String> nums = Arrays.asList(s.split(" "));
-				Double x = Double.valueOf(nums.get(0));
-				Double y = Double.valueOf(nums.get(1));
-				Double z = Double.valueOf(nums.get(2));
-				//TODO: 4th coordinate?
+				// TODO: 4th coordinate?
 				result.add(new Point3D(x, y, z));
 			}
 		}
 		return result;
 	}
 
+	private static List<Face> getFaces(List<String> lines) {
+		List<Face> result = new ArrayList<>();
+		for (String line : lines) {
+			if (line.trim().startsWith("f ")) {
+				String s = reduceWitespaces(line.substring(2));
+				List<String> nums = Arrays.asList(s.split(" "));
+				int x = Integer.valueOf(nums.get(0).split("/")[0]) - 1;
+				int y = Integer.valueOf(nums.get(1).split("/")[0]) - 1;
+				int z = Integer.valueOf(nums.get(2).split("/")[0]) - 1;
+				result.add(new Face(x, y, z));
+			}
+		}
+		return result;
+	}
+
 	private static String reduceWitespaces(String s) {
-		while(s.contains("  "))
+		while (s.contains("  "))
 			s = s.replace("  ", " ");
 		return s.trim();
 	}

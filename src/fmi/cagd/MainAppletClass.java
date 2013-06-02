@@ -10,15 +10,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.io.FileUtils;
-
-import fmi.cagd.entities.Edge;
-import fmi.cagd.entities.Point3D;
-import fmi.cagd.entities.Tuple;
+import fmi.cagd.domain.Edge;
+import fmi.cagd.domain.Face;
+import fmi.cagd.domain.Point3D;
+import fmi.cagd.domain.Tuple;
 
 /**
  * Rather trivial class name.
@@ -47,31 +45,22 @@ public class MainAppletClass extends Applet implements MouseListener,
 		this.setSize(getSize());
 		width = getSize().width;
 		height = getSize().height;
-		
+
+		Mesh mesh = MeshParser.load(new File("cube.obj"));
+
+		System.out.println(mesh.getObjectName());
 
 		vertices = new ArrayList<>();
-		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, -1.5, -1), null));
-		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, -1, 1), null));
-		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, 1, -1), null));
-		vertices.add(new Tuple<Point3D, Point>(new Point3D(-1, 1, 1), null));
-		vertices.add(new Tuple<Point3D, Point>(new Point3D(1, -1, -1), null));
-		vertices.add(new Tuple<Point3D, Point>(new Point3D(1, -1, 1), null));
-		vertices.add(new Tuple<Point3D, Point>(new Point3D(1, 1, -1), null));
-		vertices.add(new Tuple<Point3D, Point>(new Point3D(1, 1, 1), null));
+		for (Point3D point : mesh.getVertices()) {
+			vertices.add(new Tuple<Point3D, Point>(point, null));
+		}
 
 		edges = new ArrayList<>();
-		edges.add(new Edge(0, 1));
-		edges.add(new Edge(0, 2));
-		edges.add(new Edge(0, 4));
-		edges.add(new Edge(1, 3));
-		edges.add(new Edge(1, 5));
-		edges.add(new Edge(2, 3));
-		edges.add(new Edge(2, 6));
-		edges.add(new Edge(3, 7));
-		edges.add(new Edge(4, 5));
-		edges.add(new Edge(4, 6));
-		edges.add(new Edge(5, 7));
-		// edges.add(new Edge(6, 7));
+		for (Face face : mesh.getFaces()) {
+			edges.add(new Edge(face.a, face.b));
+			edges.add(new Edge(face.b, face.c));
+			edges.add(new Edge(face.c, face.a));
+		}
 
 		backbuffer = createImage(width, height);
 		backg = backbuffer.getGraphics();

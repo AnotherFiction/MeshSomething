@@ -2,18 +2,21 @@ package fmi.cagd;
 
 import java.util.List;
 
-import fmi.cagd.entities.Point3D;
+import fmi.cagd.domain.Face;
+import fmi.cagd.domain.Point3D;
 
 public class Mesh {
 
 	private final String name;
 	private final List<Point3D> vertices;
 	private final List<Point3D> normals;
+	private final List<Face> faces;
 
-	public Mesh(String name, List<Point3D> vertices, List<Point3D> normals) {
+	public Mesh(String name, List<Point3D> vertices, List<Point3D> normals, List<Face> faces) {
 		this.name = name;
 		this.vertices = vertices;
 		this.normals = normals;
+		this.faces = faces;
 	}
 
 	public String getObjectName() {
@@ -28,8 +31,7 @@ public class Mesh {
 		return this.normals;
 	}
 
-	public List<Point3D> getFaces() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Face> getFaces() {
+		return this.faces;
 	}
 }

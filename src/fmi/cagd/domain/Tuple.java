@@ -1,4 +1,4 @@
-package fmi.cagd.entities;
+package fmi.cagd.domain;
 
 public class Tuple<X, Y> {
 	public final X first;

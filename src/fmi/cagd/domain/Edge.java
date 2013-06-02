@@ -1,4 +1,4 @@
-package fmi.cagd.entities;
+package fmi.cagd.domain;
 
 public class Edge {
 	public int a, b;
