@@ -37,6 +37,8 @@ public class MainAppletClass extends Applet implements MouseListener,
 
 	int azimuth = 35;
 	int elevation = 30;
+	
+	int scaleFactor = width / 4;
 
 	List<Tuple<Point3D, Point>> vertices;
 	List<Edge> edges;
@@ -47,6 +49,7 @@ public class MainAppletClass extends Applet implements MouseListener,
 		height = getSize().height;
 
 		Mesh mesh = MeshParser.load(new File("cube.obj")).recenter();
+		scaleFactor = (int) (width / mesh.scaleFactor());
 
 		System.out.println(mesh.getObjectName());
 
@@ -84,7 +87,6 @@ public class MainAppletClass extends Applet implements MouseListener,
 		// project vertices onto the 2D viewport
 		// final Point[] points = new Point[vertices.size()];
 
-		final int scaleFactor = width / 4;
 		final float near = 3; // distance from eye to near plane
 		final float nearToObj = 1.5f; // distance from near plane to center of
 										// object

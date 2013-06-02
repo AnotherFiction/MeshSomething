@@ -59,4 +59,12 @@ public class MeshParserTest {
 	public void getMeshCenter() {
 		Assert.assertEquals(new Point3D(0.5, 0.5, 0.5), mesh.geometricCenter());
 	}
+
+	@Test
+	public void distance() {
+		Assert.assertEquals(
+				Math.sqrt(3.0),
+				new Point3D(0.5, 0.5, 0.5).distance(new Point3D(1.5, 1.5, 1.5)),
+				0.001);
+	}
 }

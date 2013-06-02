@@ -58,4 +58,14 @@ public class Mesh {
 		}
 		return this;
 	}
+	
+	public Double scaleFactor() {
+		Point3D max = new Point3D(0, 0, 0);
+		Point3D center = geometricCenter();
+		for (Point3D p : vertices) {
+			if(center.distance(max) < center.distance(p))
+				max = p;			
+		}
+		return center.distance(max) * 2;
+	}
 }

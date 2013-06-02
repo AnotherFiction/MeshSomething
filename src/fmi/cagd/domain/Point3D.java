@@ -9,6 +9,13 @@ public class Point3D {
 		z = Z;
 	}
 
+	public double distance(Point3D point) {
+		return Math
+				.sqrt(Math.pow(this.x - point.x, 2)
+						+ Math.pow(this.y - point.y, 2)
+						+ Math.pow(this.z - point.z, 2));
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -40,7 +47,7 @@ public class Point3D {
 			return false;
 		return true;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Point3D [x=" + x + ", y=" + y + ", z=" + z + "]";
