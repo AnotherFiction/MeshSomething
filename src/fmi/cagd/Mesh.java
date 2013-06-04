@@ -59,6 +59,15 @@ public class Mesh {
 		return this;
 	}
 	
+	public Mesh translate(Point3D vector) {
+		for (Point3D p : vertices) {
+			p.x += vector.x;
+			p.y += vector.y;
+			p.z += vector.z;
+		}
+		return this;
+	}
+	
 	public Double scaleFactor() {
 		Point3D max = new Point3D(0, 0, 0);
 		Point3D center = geometricCenter();
@@ -67,5 +76,15 @@ public class Mesh {
 				max = p;			
 		}
 		return center.distance(max) * 4;
+	}
+	
+	public Mesh scale(double scaleFactor) {
+		Point3D center = geometricCenter();
+		for (Point3D p : vertices) {
+			p.x *= scaleFactor;
+			p.y *= scaleFactor;
+			p.z *= scaleFactor;
+		}
+		return this;
 	}
 }

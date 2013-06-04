@@ -48,7 +48,7 @@ public class MainAppletClass extends Applet implements MouseListener,
 		width = getSize().width;
 		height = getSize().height;
 
-		Mesh mesh = MeshParser.load(new File("airboat.obj")).recenter();
+		Mesh mesh = MeshParser.load(new File("cube.obj")).recenter();
 		scaleFactor = (int) (width / mesh.scaleFactor());
 
 		System.out.println(mesh.getObjectName());
