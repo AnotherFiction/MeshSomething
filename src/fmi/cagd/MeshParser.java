@@ -17,7 +17,7 @@ public class MeshParser {
 	public static Mesh load(final File file) {
 		String m = "";
 		try {
-			m = FileUtils.readFileToString(new File("cube.obj"));
+			m = FileUtils.readFileToString(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

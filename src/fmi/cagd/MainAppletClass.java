@@ -37,7 +37,7 @@ public class MainAppletClass extends Applet implements MouseListener,
 
 	int azimuth = 35;
 	int elevation = 30;
-	
+
 	int scaleFactor = width / 4;
 
 	List<Tuple<Point3D, Point>> vertices;
@@ -48,7 +48,7 @@ public class MainAppletClass extends Applet implements MouseListener,
 		width = getSize().width;
 		height = getSize().height;
 
-		Mesh mesh = MeshParser.load(new File("cube.obj")).recenter();
+		Mesh mesh = MeshParser.load(new File("airboat.obj")).recenter();
 		scaleFactor = (int) (width / mesh.scaleFactor());
 
 		System.out.println(mesh.getObjectName());

@@ -66,6 +66,6 @@ public class Mesh {
 			if(center.distance(max) < center.distance(p))
 				max = p;			
 		}
-		return center.distance(max) * 2;
+		return center.distance(max) * 4;
 	}
 }

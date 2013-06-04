@@ -10,7 +10,7 @@ import fmi.cagd.domain.Point3D;
 
 public class MeshParserTest {
 
-	private Mesh mesh = MeshParser.load(new File("cube.obj"));
+	private Mesh mesh = MeshParser.load(new File("res/cube.obj"));
 
 	@Test
 	public void name() {
