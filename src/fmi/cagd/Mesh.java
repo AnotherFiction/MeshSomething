@@ -1,9 +1,11 @@
 package fmi.cagd;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fmi.cagd.domain.Face;
 import fmi.cagd.domain.Point3D;
+import fmi.cagd.domain.Triangle;
 
 public class Mesh {
 
@@ -11,6 +13,7 @@ public class Mesh {
 	private final List<Point3D> vertices;
 	private final List<Point3D> normals;
 	private final List<Face> faces;
+	private final List<Triangle> triangles;
 
 	public Mesh(String name, List<Point3D> vertices, List<Point3D> normals,
 			List<Face> faces) {
@@ -18,6 +21,7 @@ public class Mesh {
 		this.vertices = vertices;
 		this.normals = normals;
 		this.faces = faces;
+		this.triangles = buildTriangles();
 	}
 
 	public String getObjectName() {
@@ -34,6 +38,10 @@ public class Mesh {
 
 	public List<Face> getFaces() {
 		return this.faces;
+	}
+
+	public List<Triangle> getTriangles() {
+		return this.triangles;
 	}
 
 	public Point3D geometricCenter() {
@@ -58,7 +66,7 @@ public class Mesh {
 		}
 		return this;
 	}
-	
+
 	public Mesh translate(Point3D vector) {
 		for (Point3D p : vertices) {
 			p.x += vector.x;
@@ -67,17 +75,17 @@ public class Mesh {
 		}
 		return this;
 	}
-	
+
 	public Double scaleFactor() {
 		Point3D max = new Point3D(0, 0, 0);
 		Point3D center = geometricCenter();
 		for (Point3D p : vertices) {
-			if(center.distance(max) < center.distance(p))
-				max = p;			
+			if (center.distance(max) < center.distance(p))
+				max = p;
 		}
 		return center.distance(max) * 4;
 	}
-	
+
 	public Mesh scale(double scaleFactor) {
 		Point3D center = geometricCenter();
 		for (Point3D p : vertices) {
@@ -86,5 +94,16 @@ public class Mesh {
 			p.z *= scaleFactor;
 		}
 		return this;
+	}
+
+	private List<Triangle> buildTriangles() {
+		List<Triangle> list = new ArrayList<>();
+		for (Face face : getFaces()) {
+			Point3D a = getVertices().get(face.a);
+			Point3D b = getVertices().get(face.b);
+			Point3D c = getVertices().get(face.c);
+			list.add(new Triangle(a, b, c));
+		}
+		return list;
 	}
 }

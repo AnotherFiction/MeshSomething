@@ -11,14 +11,10 @@ import casmi.Trackball;
 import casmi.graphics.color.ColorSet;
 import casmi.graphics.element.Box;
 import casmi.graphics.element.Line;
-import casmi.graphics.element.Triangle;
 import casmi.graphics.element.Polygon;
 import casmi.graphics.object.Camera;
 import casmi.graphics.object.GraphicsObject;
 import casmi.graphics.object.Perspective;
-import casmi.matrix.Vertex;
-import fmi.cagd.Mesh;
-import fmi.cagd.MeshParser;
 import fmi.cagd.domain.Face;
 import fmi.cagd.domain.Point3D;
 
